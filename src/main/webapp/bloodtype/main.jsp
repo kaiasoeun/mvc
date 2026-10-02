@@ -1,15 +1,9 @@
 <%@page import="com.hexagon.mvc.model.BloodManager"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%!BloodManager bloodManager = new BloodManager(); %>
+<%!%>
 <!-- 느낌표가 없으면 지역변수나 마찬가지. 요청마다 매번 인스턴스를 호출하게된다
 느낌표로 인해 한번만 만들어지게 되는것이다 -->
-<% 
-String type = request.getParameter("type");
-if (type == null)
-	type = ""; 
-String msg = bloodManager.getAdvice(type); 
 
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,8 +39,8 @@ String msg = bloodManager.getAdvice(type);
 	//form 이라는 말이 들어가면 항상 POST로 간다
 	//파일을 많이 안만들려는 스파게티 코드 예제. 이곳에 전부 쓴다
 		$("#form1").attr({
-			action: "/bloodtype/main.jsp",
-			method: "POST"		
+			action: "/bloodtype",
+			method: "GET"		
 		});
 		$("#form1").submit();
 	
@@ -75,11 +69,11 @@ String msg = bloodManager.getAdvice(type);
 					<!-- selectd 속성을 서버측에서 부여하여 브라우저에 보내야 하는데 이때 사용자가 선택한 색상과 일치하는 option에 대해서만 selecte를 부여하면 된다
 					날아온 value를 select창에서 유지함 -->
 					<option value="">원하시는 색상을 선택하세요</option>
-					<option value="A" <%if(type.equals("A")){%>selected<%}  %> >A</option>
+					<option value="A" >A</option>
 					<!-- 각 값을 할당 -->
-					<option value="B" <%if(type.equals("B")){%>selected<%}  %>>B</option>
-					<option value="O" <%if(type.equals("O")){%>selected<%}  %>>O</option>
-					<option value="AB" <%if(type.equals("AB")){%>selected<%}  %>>AB</option>
+					<option value="B">B</option>
+					<option value="O">O</option>
+					<option value="AB">AB</option>
 				</select>
 			</div>
 			<button class="btn btn-info" id="bt">결과 보기</button>
@@ -91,7 +85,7 @@ String msg = bloodManager.getAdvice(type);
 			선택 결과: <br>
 		</h3>
 		<h5>
-			<%=msg%>
+			<%=request.getAttribute("msg")%>
 		</h5>
 
 	</div>

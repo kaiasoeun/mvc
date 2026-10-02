@@ -11,7 +11,6 @@ public class BloodManager {
 				pick = "A형";
 				msg = "배려심 넘치는 완벽주의자";
 				break;
-
 			case "B" :
 				pick = "B형";
 				msg = "솔직하고 자유로운 마이웨이";

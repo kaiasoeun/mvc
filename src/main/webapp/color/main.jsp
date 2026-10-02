@@ -1,14 +1,13 @@
 <%@page import="com.hexagon.mvc.model.ColorManager"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%! ColorManager colorManager = new ColorManager(); %>
+<%! %>
 <%
 //클라이언트가 전송한 색상 파라미터 받기
-String color = request.getParameter("color");
+//지금부터 MVC로 철저히 나누어서 개발해야한다
+//view(디자인)만을 담당해야하는 jsp 코드에 controller로의 코드가 섞여있으므로
+//디자인을 버리고 다른 디자인 소스로 대체할 경우 controller가 함께 날아가버린다
+//즉 완전히 분리시키지 못한 상태 == 모델 1 방식의 개발이라 함....
 
-if (color == null)
-	color = ""; // 최초에는 전송된 파라미터가 없으므로 디폴트값을 강제로 부여하자
-
-String msg = colorManager.getAdvice(color);
 
 %>
 <!DOCTYPE html>
@@ -37,7 +36,7 @@ String msg = colorManager.getAdvice(color);
 	//form 이라는 말이 들어가면 항상 POST로 간다
 	//파일을 많이 안만들려는 스파게티 코드 예제. 이곳에 전부 쓴다
 		$("#form1").attr({
-			action: "/color/main.jsp",
+			action: "/color",
 			method: "POST"		
 		});
 		$("#form1").submit();
@@ -67,11 +66,11 @@ String msg = colorManager.getAdvice(color);
 					<!-- selectd 속성을 서버측에서 부여하여 브라우저에 보내야 하는데 이때 사용자가 선택한 색상과 일치하는 option에 대해서만 selecte를 부여하면 된다
 					날아온 value를 select창에서 유지함 -->
 					<option value="">원하시는 색상을 선택하세요</option>
-					<option value="red" <%if(color.equals("red")){%>selected<%}  %> >빨강</option>
+					<option value="red">빨강</option>
 					<!-- 각 값을 할당 -->
-					<option value="blue" <%if(color.equals("blue")){%>selected<%}  %>>파랑</option>
-					<option value="green" <%if(color.equals("green")){%>selected<%}  %>>초록</option>
-					<option value="yellow" <%if(color.equals("yellow")){%>selected<%}  %>>노랑</option>
+					<option value="blue" >파랑</option>
+					<option value="green">초록</option>
+					<option value="yellow">노랑</option>
 				</select>
 			</div>
 			<button class="btn btn-info" id="bt">결과 보기</button>
@@ -83,7 +82,8 @@ String msg = colorManager.getAdvice(color);
 			선택 결과: <br>
 		</h3>
 		<h5>
-			<%=msg%>
+		<!-- 개발자가 서버를 중지한 적이 없다면 msg는 언제나 꺼내쓸수있다 -->
+			<%=request.getAttribute("msg") %>
 		</h5>
 
 	</div>
