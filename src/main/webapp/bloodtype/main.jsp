@@ -1,4 +1,15 @@
+<%@page import="com.hexagon.mvc.model.BloodManager"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%!BloodManager bloodManager = new BloodManager(); %>
+<!-- 느낌표가 없으면 지역변수나 마찬가지. 요청마다 매번 인스턴스를 호출하게된다
+느낌표로 인해 한번만 만들어지게 되는것이다 -->
+<% 
+String type = request.getParameter("type");
+if (type == null)
+	type = ""; 
+String msg = bloodManager.getAdvice(type); 
+
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,39 +19,6 @@
 <body>
 
 </body><%@ page contentType="text/html; charset=UTF-8"%>
-<%
-//클라이언트가 전송한 색상 파라미터 받기
-String type = request.getParameter("type");
-if (type == null)
-	type = ""; //최초에는 전송된 파라미터가 없으므로 디폴트값을 강제로 부여하자
-out.print("유저가 전송한 혈액형은 " + type);
-
-String msg = null; //지역변수니까
-String pick = null;
-switch (type) {
-	case "A" :
-		pick = "A형";
-		msg = "배려심 넘치는 완벽주의자";
-		break;
-
-	case "B" :
-		pick = "B형";
-		msg = "솔직하고 자유로운 마이웨이";
-		break;
-
-	case "O" :
-		pick = "O형";
-		msg = "에너지 넘치는 분위기 메이커";
-		break;
-	case "AB" :
-		pick = "AB형";
-		msg = "예측 불허의 반전 매력가";
-		break;
-	default :
-		msg = "혈액형을 아직 선택하지 않았네요";
-
-}
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -110,7 +88,7 @@ switch (type) {
 		</form>
 
 		<h3>
-			선택 결과: <%=pick %><br>
+			선택 결과: <br>
 		</h3>
 		<h5>
 			<%=msg%>
